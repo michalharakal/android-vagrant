@@ -24,7 +24,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
-  
+
+  if (http_proxy != ":")  
   if Vagrant.has_plugin?("vagrant-proxyconf")
       config.proxy.http     = "#{http_proxy}"
       config.proxy.https    = "#{http_proxy}"
@@ -32,6 +33,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       config.apt_proxy.http  = "#{http_proxy}"
       config.apt_proxy.https = "#{http_proxy}"
   end    
+  end
   
   config.vm.provision "shell" do |s|
       s.path =  "shell/vagrant-android-build.sh"

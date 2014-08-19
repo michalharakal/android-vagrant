@@ -6,7 +6,9 @@ HTTP_PROXY=$HTTP_PROXY_ADDRESS:$HTTP_PROXY_PORT
 HTTPS_PROXY_ADDRESS=$HTTP_PROXY
 FTP_PROXY_ADDRESS=$HTTP_PROXY
 
-if [ -n "$HTTP_PROXY" ]; then 
+ANDROID_PROXY_SETTINGS=""
+
+if [ -n "$HTTP_PROXY" ]; then
     # bash environment variable
     ANDROID_PROXY_SETTINGS="--proxy-port $HTTP_PROXY_PORT --proxy-host $HTTP_PROXY_ADDRESS"
 fi
@@ -30,15 +32,19 @@ sudo -u vagrant echo export PATH=/usr/local/android-sdk/tools:\$PATH >> /home/va
 sudo -u vagrant echo export PATH=/usr/local/android-sdk/platform-tools:\$PATH >> /home/vagrant/.bashrc
 
 # Maven
-sudo -u vagrant wget $WGET_PROXY_SETTINGS http://download.nextag.com/apache/maven/maven-3/3.2.1/binaries/apache-maven-3.2.1-bin.tar.gz
-sudo -u vagrant tar -xvzf apache-maven-3.2.1-bin.tar.gz
-# Add Maven to PATH
-sudo -u vagrant echo export PATH=/home/vagrant/apache-maven-3.2.1/bin:\$PATH >> /home/vagrant/.bashrc
+if [ ! -d "/usr/local/maven/apache-maven-3.1.1" ]; then
+    sudo -u vagrant wget $WGET_PROXY_SETTINGS http://mirror.23media.de/apache/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.tar.gz
+    tar -xvzf apache-maven-3.1.1-bin.tar.gz; mv apache-maven-3.1.1 /usr/local/maven; chmod 777 -R /usr/local/maven/apache-maven-3.1.1; rm apache-maven-3.1.1.tar.gz;
+    # Add Maven to PATH
+    sudo -u vagrant echo export PATH=/usr/local/maven/apache-macen-3.1.1/bin:\$PATH >> /home/vagrant/.bashrc
+else
+    echo "Maven installed in /usr/localmaven. Skipping."
+fi
 
 # http://stackoverflow.com/questions/4681697/is-there-a-way-to-automate-the-android-sdk-installation/4682241#4682241
 expect -c '
 set timeout -1   ;
-spawn sudo -u vagrant android update sdk $ANDROID_PROXY_SETTINGS -u; 
+spawn sudo -u vagrant /usr/local/android-sdk/tools/android update sdk -u;
 expect { 
     "Do you accept the license" { exp_send "y\r" ; exp_continue }
     eof
@@ -49,8 +55,7 @@ expect {
 sudo -u vagrant echo export ANDROID_HOME=/usr/local/android-sdk/ >> /home/vagrant/.bashrc
 
 sudo -u vagrant git clone https://github.com/mosabua/maven-android-sdk-deployer.git
-sudo -u vagrant cd maven-android-sdk-deployer/
-sudo -u vagrant mvn install
-sudo -u vagrant mvn install
-sudo -u vagrant cd extras/compatibility-v4/
-sudo -u vagrant mvn clean install
+cd /home/vagrant/maven-android-sdk-deployer
+mvn clean install
+cd /home/vagrant/maven-android-sdk-deployer/extras/compatibility-v4/
+mvn clean install
