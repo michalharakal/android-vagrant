@@ -15,7 +15,7 @@ fi
 apt-get update -y
 apt-get install openjdk-7-jdk -y
 # For maven-plugin
-apt-get install lib32z1-dev bison flex lib32ncurses5-dev libx11-dev gperf g++-multilib except -y
+apt-get install lib32z1-dev bison flex lib32ncurses5-dev libx11-dev gperf g++-multilib expect git -y
 # Setup Android SDK
 #Download and install the Android SDK
 if [ ! -d "/usr/local/android-sdk" ]; then
