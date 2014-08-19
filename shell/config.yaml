@@ -1,0 +1,5 @@
+shell-config:
+    network:
+        http_proxy_address: http://192.168.1.112
+        http_proxy_port: 3128
+        
