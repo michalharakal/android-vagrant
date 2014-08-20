@@ -111,7 +111,6 @@ expect {
     }
 '
 
-
 expect -c '
 set timeout -1   ;
 spawn sudo -u vagrant /usr/local/android-sdk/tools/android  update sdk  --no-ui --all --filter "android-9, sysimg-9, addon-google_apis-google-9" ;
@@ -139,15 +138,12 @@ expect {
     }
 '
 
-
 # maven android sdk deployers
 if [ ! -d "/home/vagrant/maven-android-sdk-deployer" ]; then
     sudo -u vagrant git clone https://github.com/mosabua/maven-android-sdk-deployer.git
 fi
-    
+
 cd /home/vagrant/maven-android-sdk-deployer
-sudo -u vagrant /usr/local/apache-maven-3.1.1/bin/mvn $MAVEN_PROXY_SETTINGS clean install
-cd /home/vagrant/maven-android-sdk-deployer/extras/compatibility-v4/
-sudo -u vagrant /usr/local/apache-maven-3.1.1/bin/mvn $MAVEN_PROXY_SETTINGS clean install
-cd /home/vagrant/maven-android-sdk-deployer/extras/compatibility-v7/
-sudo -u vagrant /usr/local/apache-maven-3.1.1/bin/mvn $MAVEN_PROXY_SETTINGS clean install
+sudo -u vagrant /usr/local/apache-maven-3.1.1/bin/mvn clean install
+cd /home/vagrant/maven-android-sdk-deployer/extras
+sudo -u vagrant /usr/local/apache-maven-3.1.1/bin/mvn clean install
