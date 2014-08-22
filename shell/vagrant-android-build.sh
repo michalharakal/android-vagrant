@@ -53,7 +53,7 @@ if [ ! -d "/usr/local/maven/apache-maven-3.1.1" ]; then
     # Add Maven to PATH
     sudo -u vagrant echo export PATH=/usr/local/apache-maven-3.1.1/bin:\$PATH >> /home/vagrant/.bashrc
     sudo -u vagrant echo export M2_HOME=/usr/local/apache-maven-3.1.1 >> /home/vagrant/.bashrc
-    sudo -u vagrant export M2_HOHE = /usr/local/apache-maven-3.1.1
+    sudo -u vagrant M2_HOHE = /usr/local/apache-maven-3.1.1
     
     
 else
@@ -95,43 +95,7 @@ expect {
 
 expect -c '
 set timeout -1   ;
-spawn sudo -u vagrant /usr/local/android-sdk/tools/android  update sdk  --no-ui --all --filter "android-19, sysimg-19, addon-google_apis-google-19 "  ;
-expect { 
-    "Do you accept the license" { exp_send "y\r" ; exp_continue }
-    eof
-    }
-'
-
-expect -c '
-set timeout -1   ;
-spawn sudo -u vagrant /usr/local/android-sdk/tools/android  update sdk  --no-ui --all --filter "android-17, sysimg-17, addon-google_apis-google-17 "  ;
-expect { 
-    "Do you accept the license" { exp_send "y\r" ; exp_continue }
-    eof
-    }
-'
-
-expect -c '
-set timeout -1   ;
-spawn sudo -u vagrant /usr/local/android-sdk/tools/android  update sdk  --no-ui --all --filter "android-9, sysimg-9, addon-google_apis-google-9" ;
-expect { 
-    "Do you accept the license" { exp_send "y\r" ; exp_continue }
-    eof
-    }
-'
-
-expect -c '
-set timeout -1   ;
-spawn sudo -u vagrant /usr/local/android-sdk/tools/android  update sdk  --no-ui --all --filter "android-8, sysimg-8, addon-google_apis-google-8" ;
-expect { 
-    "Do you accept the license" { exp_send "y\r" ; exp_continue }
-    eof
-    }
-'
-
-expect -c '
-set timeout -1   ;
-spawn sudo -u vagrant /usr/local/android-sdk/tools/android  update sdk  --no-ui --all --filter "android-16, sysimg-16, addon-google_apis-google-16" ;
+spawn sudo -u vagrant /usr/local/android-sdk/tools/android  update sdk  --no-ui --all;
 expect { 
     "Do you accept the license" { exp_send "y\r" ; exp_continue }
     eof
