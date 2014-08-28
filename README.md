@@ -13,8 +13,11 @@ Your proxy settings should be set in file _shell/config.yaml_
 Install the plugin:
 
 ```sh
+export http_proxy=YOUR_PROXY
 vagrant plugin install vagrant-proxyconf
 ```
+
+
 
 On Mac OS X you may have troubles beacuse missing _gem nokogiri_. Working solution was described here: http://bullrico.com/2012/07/12/installing-nokogiri-after-updating-homebrew/
 
